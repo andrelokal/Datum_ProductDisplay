@@ -1,0 +1,46 @@
+<?php
+$block = $this->getLayout()->getBlock('featured.product');
+if (!$block) {
+    return;
+}
+
+$product = $block->getFeaturedProduct();
+
+if (!$product || !$product->getId()) {
+    return;
+}
+
+$productName = $block->escapeHtml($product->getName());
+$productPrice = $block->getFormattedPrice($product);
+$productImageUrl = $block->getProductImageUrl($product);
+$productUrl = $block->getProductUrl($product);
+$productId = $block->escapeHtml($product->getId());
+?>
+<div class="featured-product">
+    <a href="<?php echo $productUrl; ?>" title="<?php echo $productName; ?>">
+        <img src="<?php echo $productImageUrl; ?>" alt="<?php echo $productName; ?>"/>
+        <div class="product-info">
+            <h2 class="product-name"><?php echo $productName; ?></h2>
+            <p class="product-price"><?php echo $productPrice; ?></p>
+            <span class="stock-qty" id="stock-qty-<?php echo $productId; ?>"></span>
+        </div>
+    </a>
+</div>
+
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        function updateStockQty() {
+            $.ajax({
+                url: '<?php echo $block->getUrl('productdisplay/stock'); ?>',
+                type: 'GET',
+                data: {product_id: '<?php echo $productId; ?>'},
+                success: function (data) {
+                    $('#stock-qty-<?php echo $productId; ?>').text('Quantidade em estoque: ' + data.qty);
+                }
+            });
+        }
+
+        updateStockQty();
+        setInterval(updateStockQty, 5000);
+    });
+</script>

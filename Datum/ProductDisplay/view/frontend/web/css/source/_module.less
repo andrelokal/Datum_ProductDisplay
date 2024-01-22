@@ -1,0 +1,42 @@
+.featured-product {
+    text-align: center;
+    margin-bottom: 20px;
+
+    &:hover {
+        background: #fff;
+        box-shadow: 3px 4px 4px 0 rgba(0,0,0,0.3);
+        border: 1px solid #bbb;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        display: inline;
+        margin: 0 auto;
+    }
+
+    a {
+        &:hover {
+            text-decoration: unset;
+        }
+    }
+
+    .product-info {
+        padding: 10px;
+        color: #333;
+
+        .product-name {
+            margin-top: 10px;
+            font-size: 1.4rem;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .stock-qty {
+            font-size: 1.4rem;
+        }
+    }
+}
